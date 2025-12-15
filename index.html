@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Portfolio - Dark Mode</title>
+    <style>
+        body { font-family: 'Roboto', sans-serif; margin: 0; padding: 0; background-color: #121212; color: #e0e0e0; display: flex; height: 100vh; }
+        .sidebar { width: 250px; background-color: #1e1e1e; padding: 1rem; box-shadow: 2px 0 5px rgba(0,0,0,0.5); transition: width 0.3s; }
+        .sidebar.collapsed { width: 60px; }
+        .sidebar h2 { color: #bb86fc; margin-bottom: 1rem; font-size: 1.2rem; }
+        .sidebar ul { list-style: none; padding: 0; }
+        .sidebar li { margin-bottom: 1rem; }
+        .sidebar a { color: #e0e0e0; text-decoration: none; display: block; padding: 0.5rem; border-radius: 4px; transition: background 0.3s; }
+        .sidebar a:hover { background-color: #333; }
+        .main { flex: 1; padding: 2rem; overflow-y: auto; }
+        .login-overlay { display: flex; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); justify-content: center; align-items: center; z-index: 1000; opacity: 0; visibility: hidden; transition: opacity 0.3s, visibility 0.3s; }
+        .login-overlay.show { opacity: 1; visibility: visible; }
+        .login-form { background: #1e1e1e; padding: 2rem; border-radius: 8px; width: 300px; text-align: center; }
+        form { display: flex; flex-direction: column; gap: 1rem; }
+        input { padding: 0.75rem; border: 1px solid #333; border-radius: 4px; background: #2c2c2c; color: #e0e0e0; font-size: 1rem; }
+        button { padding: 0.75rem; background: #bb86fc; color: #121212; border: none; border-radius: 4px; cursor: pointer; font-size: 1rem; transition: background 0.3s; }
+        button:hover { background: #9c4dcc; }
+        .portfolio { display: none; }
+        .project { margin-bottom: 2rem; padding: 1rem; background: #1e1e1e; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.5); }
+        .project h3 { color: #bb86fc; }
+        #toggleSidebar { background: none; border: none; color: #e0e0e0; font-size: 1.5rem; cursor: pointer; margin-bottom: 1rem; }
+    </style>
+</head>
+<body>
+    <div class="sidebar" id="sidebar">
+        <button id="toggleSidebar">☰</button>
+        <h2>Menu</h2>
+        <ul>
+            <li><a href="#about">About</a></li>
+            <li><a href="#projects">Projects</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </div>
+    <div class="main">
+        <div id="loginOverlay" class="login-overlay">
+            <div class="login-form">
+                <h2>Login</h2>
+                <form id="loginForm">
+                    <label for="username">Username:</label>
+                    <input type="text" id="username" required>
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" required>
+                    <button type="submit">Login</button>
+                </form>
+            </div>
+        </div>
+        <div id="portfolio" class="portfolio">
+            <h1>Welcome to My Portfolio</h1>
+            <section id="about">
+                <h2>About Me</h2>
+                <p>I'm a full-stack developer passionate about creating innovative web solutions.</p>
+            </section>
+            <section id="projects">
+                <h2>Projects</h2>
+                <div class="project">
+                    <h3>Web Scraper Tool</h3>
+                    <p>A Python-based tool for data extraction from websites, using BeautifulSoup and Selenium.</p>
+                    <a href="#">View Code</a>
+                </div>
+                <div class="project">
+                    <h3>VR Experience</h3>
+                    <p>Immersive virtual reality app built with Unity and C# for educational purposes.</p>
+                    <a href="#">View Demo</a>
+                </div>
+            </section>
+            <section id="contact">
+                <h2>Contact</h2>
+                <p>Email: example@email.com</p>
+                <button id="logout">Logout</button>
+            </section>
+        </div>
+    </div>
+
+    <script>
+        const loginOverlay = document.getElementById('loginOverlay');
+        const loginForm = document.getElementById('loginForm');
+        const portfolio = document.getElementById('portfolio');
+        const logoutBtn = document.getElementById('logout');
+        const sidebar = document.getElementById('sidebar');
+        const toggleSidebar = document.getElementById('toggleSidebar');
+
+        // Simulated credentials (replace with real backend auth)
+        const validUsername = 'user';
+        const validPassword = 'pass';
+
+        // Show login on page load
+        window.addEventListener('load', () => {
+            loginOverlay.classList.add('show');
+        });
+
+        loginForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            if (username === validUsername && password === validPassword) {
+                loginOverlay.classList.remove('show');
+                portfolio.style.display = 'block';
+            } else {
+                alert('Invalid credentials');
+            }
+        });
+
+        logoutBtn.addEventListener('click', () => {
+            portfolio.style.display = 'none';
+            loginOverlay.classList.add('show');
+            loginForm.reset();
+        });
+
+        // Sidebar toggle
+        toggleSidebar.addEventListener('click', () => {
+            sidebar.classList.toggle('collapsed');
+        });
+    </script>
+</body>
+</html>
